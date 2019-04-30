@@ -1,29 +1,55 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
-
+<script>
+import { mapMutations, mapState } from "vuex";
+export default {
+  data() {
+    return {
+      isLogin: false
+    };
+  },
+  computed: {
+    ...mapState("common", ["types"]),
+    ...mapState(["token"])
+  },
+  watch: {
+    $route() {
+      // this.getBreadCrumbs();
+    }
+  },
+  async beforeCreate() {
+    // const token = this.$ls.get("token");
+    // if (token) {
+    //   this.$store.commit("set_token", token);
+    //   await this.$store.dispatch("common/init");
+    // }
+  },
+  methods: {
+    // ...mapMutations("app", ["set_breadcrumbs"]),
+    // getBreadCrumbs() {
+    //   const { matched } = this.$router.history.current;
+    //   const rst = [];
+    //   matched.forEach(match => {
+    //     if (match.meta.title) {
+    //       rst.push(match.meta.title);
+    //     }
+    //   });
+    //   this.set_breadcrumbs(rst);
+    // }
+  },
+  created() {
+    this.isLogin = window.location.href.indexOf("login") > -1;
+  }
+};
+</script>
 <style lang="less">
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+  height: 100%;
+  min-width: 1280px;
+  overflow: hidden;
+  background-color: #eff3f6;
 }
 </style>
